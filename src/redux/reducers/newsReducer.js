@@ -2,7 +2,7 @@ import { ActionTypes } from "../constants/action-types";
 
 export const initialState = {
     data: [],
-    searchTerm: ''
+    searchTerm: '',
 };
 
 export const newsReducer = (state = initialState, { type, payload }) => {

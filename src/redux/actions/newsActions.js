@@ -11,4 +11,3 @@ export const setUserInput = (searchTerm) => {
         payload: searchTerm
     }
 }
-

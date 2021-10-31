@@ -4,12 +4,11 @@ import { setNewsFeeds } from "../redux/actions/newsActions";
 import { setUserInput } from "../redux/actions/newsActions";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchNewsItems } from "../Utils/ApiUtisl";
+import { fetchNewsItems } from "../Utils/ApiUtils";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
-  // const newsFeeds = useSelector((state) => state);
   const history = useHistory();
 
   const handleInputChange = (evt) => {
@@ -21,34 +20,26 @@ const Search = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     fetchNewsFeeds();
-    // fetchSuggestions();
   };
 
   const fetchNewsFeeds = async () => {
     const res = await fetchNewsItems(searchTerm, 1, 10);
     if (res.response.results && res.response.results.length > 0) {
-      console.log("res", res);
       dispatch(setNewsFeeds(res.response));
       history.push("/home");
     }
   };
-
-  // const fetchSuggestions = async () => {
-  //   const res = await axios
-  //     .get(
-  //       `https://content.guardianapis.com/tags?show-references=${searchTerm}&api-key=test`
-  //     )
-  //     .catch((err) => {
-  //       console.log("Error", err);
-  //     });
-  //   console.log("suggestions", res);
-  // };
   return (
     <div className="search-container">
       <h1 className="heading">News Lister</h1>
-      <div>
+      <form
+        onSubmit={(event) => {
+          handleSubmit(event);
+        }}
+      >
         <label htmlFor="search">Enter search text </label>
         {/* <input type="text" onChange={(evt) => handleInputChange(evt)} /> */}
         <div class="ui icon input loading search-input">
@@ -56,6 +47,7 @@ const Search = () => {
             type="text"
             placeholder="Search..."
             onChange={(evt) => handleInputChange(evt)}
+            required
           />
           <i class="search icon hide"></i>
         </div>
@@ -65,11 +57,10 @@ const Search = () => {
               ? "ui primary basic button"
               : "ui primary basic button disabled"
           }
-          onClick={handleSubmit}
         >
           Search
         </button>
-      </div>
+      </form>
     </div>
   );
 };

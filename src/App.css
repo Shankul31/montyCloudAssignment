@@ -22,8 +22,94 @@
 
 .news-card {
   display: flex;
+  border-top: solid;
+  margin: auto;
+  padding: 10px;
+}
+
+.news-card-title {
+  display: block;
+  margin-left: 20px;
+}
+
+.news-card:first-of-type {
+  border-top: none;
 }
 
 .news-card--thumbnail {
   padding-right: 10px;
+}
+
+.news-card--thumbnail img {
+  width: 100px;
+  height: auto;
+  vertical-align: middle;
+}
+.news-card--details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.news-card--headline {
+  display: block;
+  font-size: 15px;
+  font-size: 12px;
+}
+.news-card-wp--heading {
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  background-color: white;
+}
+.news-card-wp {
+  display: block;
+  position: relative;
+  border: 2px solid;
+  margin: 20px;
+}
+
+.news-card--keyword {
+  padding: 2px;
+  box-shadow: 2px 1px 4px grey;
+  margin-right: 10px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.news-card--img {
+  width: 100px;
+  height: auto;
+}
+
+.news-card-rsltSrch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 20px;
+    margin-top:20px;
+}
+.pagination-container{
+  float: right;
+  margin-right: 20px;
+}
+
+.news-card-area{
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+@media only screen and (max-width:800px) {
+  /* For mobile phones and iPad:  */
+  .search-container *{
+    display: block;
+  }
+  .search-container label{
+    padding-left: 20px;
+  }
+  .pagination-container{
+    display: block;
+    text-align: center;
+    width: 90%;
+  }
 }
