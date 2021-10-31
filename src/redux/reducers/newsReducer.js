@@ -1,13 +1,16 @@
 import { ActionTypes } from "../constants/action-types";
 
 export const initialState = {
-    results: []
+    data: [],
+    searchTerm: ''
 };
 
 export const newsReducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case ActionTypes.SET_NEWS_FEEDS:
-            return { ...state, results: payload }
+            return { ...state, data: payload }
+        case ActionTypes.SET_USER_INPUT:
+            return { searchTerm: payload }
         default:
             return state;
     }

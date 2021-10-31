@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { setNewsFeeds } from "../redux/actions/newsActions";
+import { setUserInput } from "../redux/actions/newsActions";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchNewsItems } from "../Utils/ApiUtisl";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
-  const newsFeeds = useSelector((state) => state);
+  // const newsFeeds = useSelector((state) => state);
   const history = useHistory();
 
   const handleInputChange = (evt) => {
     if (evt.target.value !== "") {
       setSearchTerm(evt.target.value);
+      dispatch(setUserInput(evt.target.value));
     } else {
       setSearchTerm("");
     }
@@ -21,18 +24,15 @@ const Search = () => {
   const handleSubmit = () => {
     fetchNewsFeeds();
     // fetchSuggestions();
-    history.push("/home");
   };
 
   const fetchNewsFeeds = async () => {
-    const res = await axios
-      .get(
-        `https://content.guardianapis.com/search?api-key=test&q=${searchTerm}&show-fields=thumbnail,headline&show-tags=keyword&page=1&page-size=10`
-      )
-      .catch((err) => {
-        console.log("Error", err);
-      });
-    dispatch(setNewsFeeds(res.data.response.results));
+    const res = await fetchNewsItems(searchTerm, 1, 10);
+    if (res.response.results && res.response.results.length > 0) {
+      console.log("res", res);
+      dispatch(setNewsFeeds(res.response));
+      history.push("/home");
+    }
   };
 
   // const fetchSuggestions = async () => {

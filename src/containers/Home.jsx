@@ -1,14 +1,19 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { Pagination } from "semantic-ui-react";
 
 const Home = () => {
-  const newsFeeds = useSelector((state) => state.AllNewsFeeds.results);
+  const newsFeeds = useSelector((state) => state.AllNewsFeeds.data.results);
+  const searchTerm = useSelector((state) => state.AllNewsFeeds.searchTerm);
+  const totalPages = useSelector((state)=>state.AllNewsFeeds.data.total)
 
-  console.log("new:", newsFeeds);
+
+  console.log("new:",  totalPages);
 
   return (
     <div>
+      {searchTerm !== "" && <h1>Results for {searchTerm}</h1>}
       {newsFeeds &&
         newsFeeds.map((item, index) => {
           return (
@@ -34,6 +39,7 @@ const Home = () => {
             </div>
           );
         })}
+        <Pagination defaultActivePage={10} totalPages={totalPages} />
     </div>
   );
 };
